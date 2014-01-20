@@ -25,7 +25,7 @@ class PlaceController < ApplicationController
 					@album.save
 					@album.avatar = File.open(@album.avatar.current_path)
 					@album.save
-					#binding.pry		
+					binding.pry		
 				end
 			end
 			redirect_to country_place_index_path(@country)
