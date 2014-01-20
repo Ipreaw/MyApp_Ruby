@@ -1,0 +1,88 @@
+<%= render 'welcome/header' %>
+<div class="container showcountry">
+	<div class="row">
+		<div class="span12">
+			<ul class="nav nav-tabs">
+			  <li class="active"><%= link_to 'Post',history_view_path(:anchor =>"Post"),:data => {:toggle => 'tab'}%></li>
+			  <li><%= link_to 'Comment',history_view_path(:anchor =>"Comment") ,:data => {:toggle => 'tab'}%></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div class="tab-pane active" id="Post">
+			  	<% if @places %>
+				  	<div class='container'>
+				  		<div class='row'>
+							<div class="span12">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th> # </th>
+											<th class='span12'> Place 's Topic</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% i = 0 %>
+										<% @places.order("id desc").each do |p| %>
+											<% if p.place_headtopic.present? %>
+												<tr>
+													<td><h4><%= i = i + 1 %>. </h4></td>
+													<td>
+														<h4>
+															<%= p.place_headtopic %>
+														</h4>Place is : <%= p.place_name %>
+														<p class='pull-right'>Post by: <%= p.member.email%> Post Date :  <%= p.created_at.strftime('%d/%m/%Y') %></p>
+													</td>
+												</tr>
+											<% end %>
+										<% end %>
+									</tbody>
+								</table>
+							</div>  		
+						</div>
+				  	</div>
+				<% else %>
+				<h1> Don't have Your Post</h1>
+				<% end %>
+			  </div>
+			  <div class="tab-pane" id="Comment">
+			  	<% if @comments %>
+				  	<div class='container'>
+				  		<div class='row'>
+							<div class="span12">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th> # </th>
+											<th class='span12'> Place 's Topic</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% i = 0 %>
+										<% @comments.order("id desc").each do |c| %>
+											<% if c.comment_text.present? %>
+												<tr>
+													<td><h4><%= i = i + 1 %>. </h4></td>
+													<td>
+														<h4>
+															<%= c.comment_text %>
+														</h4>Comment At Place : <%= c.place.place_name %>
+														<p class='pull-right'>Post by: <%= c.member.email%> Post Date :  <%= c.created_at.strftime('%d/%m/%Y') %></p>
+													</td>
+												</tr>
+											<% end %>
+										<% end %>
+									</tbody>
+								</table>
+							</div>  		
+						</div>
+				  	</div>
+				<% else %>
+				<h1> Don't have Your Comment</h1>
+				<% end %>
+
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>

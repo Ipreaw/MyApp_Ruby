@@ -1,0 +1,45 @@
+<%= render 'welcome/header' %>
+<div class="container showcountry">
+	<div class="row">
+		<div class="span11 headpost">
+			<h2> <%= @place.place_headtopic %></h2>
+			<h4>Place : <%= @place.place_name %> &nbsp;&nbsp;&nbsp; Location : <%= @place.place_location %></h4>
+			<p class="pull-right">Post by <%= @place.member.email %></p>
+			<div class="content">
+				<%= @place.place_descp %>
+			</div>
+			<hr/>
+			<h3>Images ::</h3>
+			<div class="row">
+				<div class="span10">
+					<% @place.albumss.each do |img| %>
+						<%= image_tag img.avatar %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% if @place.comments.present? %>
+		<%= @place.comments.count %> ความคิดเห็น<hr/>
+		<% @place.comments.order("id desc").each do |cm|%>
+		<div class="row">
+			<div class="span11 commentall">
+				<%= cm.comment_text %>
+				<p class="commentfooter">Comment by : <%= cm.member.email %>  At <%= cm.created_at.strftime('%d/%m/%Y')%></p>
+			</div>
+		</div>
+		<% end %>
+	<% end %>
+	<br><br><br>
+	<% if session[:member] %>
+		แสดงความคิดเห็น<hr/>
+		<div class="row">
+			<div class="span11 newcomment">
+				<%= form_for :comment  , :url => country_place_comment_index_path(@place.country,@place) do |c|%>
+					<%= c.text_area :comment_text , :rows=>10 ,:placeholder => "Write your Comment"%>
+					<%= c.submit "Add Comment" , :class => "btn btn-default" %>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+</div>

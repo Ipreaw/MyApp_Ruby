@@ -1,0 +1,38 @@
+<%= form_for @country.places , :url => place_edit_path , :html => {:class => "form-horizontal",:multipart => true} do |pp|%>
+  <div class="modal-body">
+  	
+		<div class ="control-group">
+			<%= pp.label :place_headtopic,"Topic",{:class => "control-label"}%>
+			<div class="controls">
+				<%= pp.text_field :place_headtopic  , :placeholder => "Write your Topic"%>
+			</div>
+		</div>
+		<div class ="control-group">
+			<%= pp.label :place_name,"Place Name",{:class => "control-label"}%>
+			<div class="controls">
+				<%= pp.text_field :place_name , :placeholder => "Write your Place Name"%>
+			</div>
+		</div>
+		<div class ="control-group">
+			<%= pp.label :place_location,"Place Location",{:class => "control-label"}%>
+			<div class="controls">
+				<%= pp.text_field :place_location , :placeholder => "Write your Place Location"%>
+			</div>
+		</div>
+		<div class ="control-group">
+			<%= pp.label :place_descp,"Place Location",{:class => "control-label"}%>
+			<div class="controls">
+				<%= pp.text_area :place_descp , :cols=>10 , :rows=>5 , :placeholder => "Write your Place Description"%>
+			</div>
+		</div>
+  	<div class ="control-group">
+			<%= label_tag :avatar,"Uploadfile",:class => "control-label" %>
+			<div class="controls">
+				<%= file_field_tag :avatar ,:multiple => :true , :name =>"avatar[]"%>
+			</div>
+		</div>
+  </div>
+  <div class="modal-footer">
+  	<%= pp.submit "Save", :class => "btn btn-primary"%>
+  </div>
+<% end %>				
