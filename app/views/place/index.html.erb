@@ -1,0 +1,121 @@
+<%= render 'welcome/header' %>
+<div class="container showcountry">
+	<div class="row">
+		<h1> Welcome To <%= @country.country_name %></h1>
+		<div class="wrapper">
+		<div class="span12">
+			<% if @place %>
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<b>Warning!</b>
+					<% if @place.errors.any? %>
+					   <ul>
+					    <% @place.errors.full_messages.each do |msg| %>
+					      <li><%= msg %></li>
+					    <% end %>
+					   </ul>
+					<% end %>
+				</div>
+			<% end %>
+		</div>
+			<% if session[:member] %>
+				<%= link_to country_place_index_path(@country,:anchor => "NewPost") , :class => "btn btn-info" , :role => "button" , :data => {:toggle => "modal"}  do %>
+				<i class="icon-plus icon-white"></i>Add Your Post
+				<% end %>
+			<% end %>
+			<% if @country.places.present? %>	
+				<div class="container">
+					<div class="row showinfo">
+						<div class="span12">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th> # </th>
+										<th class='span12'> Place 's Topic</th>
+										<th colspan="2"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<% i = 0 %>
+									<% @country.places.order("id desc").each do |p| %>
+										<% if p.place_headtopic.present? %>
+											<tr>
+												<td><h4><%= i = i + 1 %>. </h4></td>
+												<td><h4><%= link_to p.place_headtopic , country_place_comment_index_path(@country,p) %></h4>Place is : <%= p.place_name %><p class='pull-right'>Post by: <%= p.member.email%> Post Date :  <%= p.created_at.strftime('%d/%m/%Y') %></p></td>
+												<% if session[:member] %>
+													<% if session[:member][:id] == p.member_id %>
+														<td>
+															<%= link_to edit_country_place_path(@country,p), :class => "btn btn-info" , :role => "button" , :data => {:toggle => "modal"}  do %>
+																<i class="icon-pencil icon-white"></i>Edit
+															<% end %>
+														</td>
+														<td>
+															<%= link_to country_place_path(@country,p), :method => :delete, :data => {:confirm => "Are you sure?"} ,:class => "btn btn-info" do %>
+																<i class="icon-trash icon-white"></i>Delete
+															<% end %>
+														</td>
+													<% else %>
+														<td colspan="2"></td>
+													<% end %>
+												<% end %>
+											</tr>
+										<% end %>
+									<% end %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			<% else %>
+				<h4>No Post</h4>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+
+<div id="NewPost" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Add New Post </h3>
+  </div>
+  <%= form_for :place , :url => country_place_index_path(@country) , :html => {:class => "form-horizontal",:multipart => true} do |p|%>
+	  <div class="modal-body">
+	  	
+  		<div class ="control-group">
+  			<%= p.label :place_headtopic,"Topic",{:class => "control-label"}%>
+  			<div class="controls">
+  				<%= p.text_field :place_headtopic  , :placeholder => "Write your Topic"%>
+  			</div>
+  		</div>
+  		<div class ="control-group">
+  			<%= p.label :place_name,"Place Name",{:class => "control-label"}%>
+  			<div class="controls">
+  				<%= p.text_field :place_name , :placeholder => "Write your Place Name"%>
+  			</div>
+  		</div>
+  		<div class ="control-group">
+  			<%= p.label :place_location,"Place Location",{:class => "control-label"}%>
+  			<div class="controls">
+  				<%= p.text_field :place_location , :placeholder => "Write your Place Location"%>
+  			</div>
+  		</div>
+  		<div class ="control-group">
+  			<%= p.label :place_descp,"Place Location",{:class => "control-label"}%>
+  			<div class="controls">
+  				<%= p.text_area :place_descp , :cols=>10 , :rows=>5 , :placeholder => "Write your Place Description"%>
+  			</div>
+  		</div>
+	  	<div class ="control-group">
+  			<%= label_tag :avatar,"Uploadfile",:class => "control-label" %>
+  			<div class="controls">
+  				<%= file_field_tag :avatar ,:multiple => :true , :name =>"avatar[]"%>
+  			</div>
+  		</div>
+	  </div>
+	  <div class="modal-footer">
+	  	<%= p.submit "Save", :class => "btn btn-primary"%>
+	  </div>
+  <% end %>
+</div>

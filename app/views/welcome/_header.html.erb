@@ -1,0 +1,36 @@
+<div class="navbar navbar-inverse navbar-fixed-top" id="headermenu">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class='brand'>My_Places</span>
+      <div class="nav-collapse collapse">
+        <ul class="nav menucontrol">
+          <li class="<%= 'active' if params[:controller] == 'welcome' %>"><%= link_to 'Home' , root_path %></li>
+          <li class="<%= 'active' if params[:controller] == 'country' || params[:controller] == 'place' || ( params[:controller] == 'comment' && params[:action] != 'history') %>">
+            <%= link_to 'Places',country_index_path %>
+          </li>
+          <% if session[:member] %>
+            <li class="<%= 'active' if params[:action] == 'history' && params[:controller] == 'comment' %>"><%= link_to 'My History',history_view_path %></li>
+          <% end %>
+        </ul>
+        <% unless session[:member] %>
+          <%= form_for :member , :url => member_login_path , :html => {:class => "navbar-form pull-right"} do |m| %>
+            <%= m.text_field :email , :class => "span2" , :placeholder => "Email" %>
+            <%= m.password_field :password , :class =>"span2" , :placeholder => "Password" %>
+            <%= m.submit "Sign in" , :class => "btn btn-info "%>
+          <% end %>
+        <% else %>
+          <div class="span6 pull-right">
+            <%= link_to 'Log out' , member_logout_path,:class=>"btn btn-info pull-right"%>
+            <div class="span3 pull-right usershow" >Welcome <%= session[:member][:email] %></div>
+            
+          </div>
+        <% end %>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>

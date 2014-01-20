@@ -1,0 +1,52 @@
+<%= render 'welcome/header'%>
+<div class=" showcountry">
+	<div class="row">
+		<div class="span5 offset2">
+			<%= form_for :place ,:url => country_place_path(@country,@place) ,:method => :put, :html => {:class => "form-horizontal",:multipart => true} do |p| %>
+				<div class ="control-group">
+		  			<%= p.label :place_headtopic,"Topic",{:class => "control-label"}%>
+		  			<div class="controls">
+		  				<%= p.text_field :place_headtopic  , :placeholder => "Write your Topic"%>
+		  			</div>
+		  		</div>
+		  		<div class ="control-group">
+		  			<%= p.label :place_name,"Place Name",{:class => "control-label"}%>
+		  			<div class="controls">
+		  				<%= p.text_field :place_name , :placeholder => "Write your Place Name"%>
+		  			</div>
+		  		</div>
+		  		<div class ="control-group">
+		  			<%= p.label :place_location,"Place Location",{:class => "control-label"}%>
+		  			<div class="controls">
+		  				<%= p.text_field :place_location , :placeholder => "Write your Place Location"%>
+		  			</div>
+		  		</div>
+		  		<div class ="control-group">
+		  			<%= p.label :place_descp,"Place Location",{:class => "control-label"}%>
+		  			<div class="controls">
+		  				<%= p.text_area :place_descp , :cols=>10 , :rows=>5 , :placeholder => "Write your Place Description"%>
+		  			</div>
+		  		</div>
+			  	<div class ="control-group">
+		  			<%= label_tag :avatar,"Uploadfile",:class => "control-label" %>
+		  			<div class="controls">
+		  				<%= file_field_tag :avatar ,:multiple => :true , :name =>"avatar[]"%>
+		  			</div>
+		  		</div>
+		  		<div class ="control-group">
+		  			<div class="controls">
+		  				<%= p.submit "Save", :class => "btn btn-primary"%>	  			
+		  			</div>
+		  		</div>
+		 	<% end %>
+		</div>
+		<div class="span8 offset1">
+			<h2>Your Albums</h2>
+			<% @albums.each do |img| %>
+				<div class="span3">
+					<%= image_tag img.avatar , :class => "img-polaroid" %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

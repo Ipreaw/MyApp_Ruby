@@ -1,0 +1,15 @@
+<%= render 'welcome/header' %>
+<div class="container showcountry">
+	<div class="row">
+		<% @countries.each do |c|%>
+			<div class="span12">
+				<%= image_tag "country/"+c.country_pic %>
+				<h2><%= c.country_name %></h2>
+				<p>
+					<%= c.country_descp %>
+				</p>
+				<p><%= link_to "View Places »" , country_place_index_path(c) %></p>
+			</div>
+		<% end %>
+	</div>
+</div>

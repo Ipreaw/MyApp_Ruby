@@ -1,0 +1,25 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+
+development:
+  <<: *defaults
+  host: localhost
+  database: myApp
+  username: brio
+
+test:
+  <<: *defaults
+  host: localhost
+  database: myApp
+  username: brio
+
+production: 
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: myApp
+  username: brio
+  pool: 5

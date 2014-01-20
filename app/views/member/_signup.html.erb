@@ -1,0 +1,51 @@
+    <div class="wrapper pull-right">
+      <div class="row">
+        <div class="span7">
+            <h1>Hello, world!</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <div class="row">
+                <div class="span4">
+                  <%= form_for :members , :url => member_index_path   do |m|%>
+                    <div class="control-group">
+                      <%= m.label :email ,"Email",{:class => 'control-label'}%>
+                      <div class="controls">
+                        <%= m.text_field :email , {:class => 'input-xlarge' , :placeholder => 'Email'}%>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <%= m.label :password ,"Password" ,{:class => 'control-label'}%>
+                      <div class="controls">
+                        <%= m.password_field :password , {:class => 'input-xlarge' , :placeholder => 'Password'}%>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <%= m.label :Re_Password ,{:class => 'control-label'}%>
+                      <div class="controls">
+                        <%= password_field_tag :Re_Password ,nil, :class => 'input-xlarge' , :placeholder => 'Re - Password'%>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <div class="controls">
+                        <%= m.submit "Sign Up" , {:class => 'btn btn-primary btn-large'}%>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="span3">
+                  <% if @member %>
+                      <div class="alert alert-error">
+                        <b>Warning!</b>
+                          <% if @member.errors.any? %>
+                               <ul>
+                                <% @member.errors.full_messages.each do |msg| %>
+                                  <li><%= msg %></li>
+                                <% end %>
+                               </ul>
+                          <% end %>
+                      </div>
+                  <% end %>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
